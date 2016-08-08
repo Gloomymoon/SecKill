@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}SecKill{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='ext/TimeCircles.css') }}">
+{% endblock %}
+
+{% block page_content %}
+
+    <div class="page-header">
+        <h3>{% for c in coupons %}
+                {{ c.limit }} {{ c.name }} coupon(s)
+            {% endfor %} today
+        </h3>
+        {% if seckill and seckill.reserved %}
+            <h3>You took aim at a {{ seckill.coupon.name }} coupon on {{ seckill.datemark }}.</h3>
+            <div>
+            {% if current_user.can(Permission.KILL) %}
+                <a class="btn btn-info {% if seckill.kill_time.year > 2000 %}disabled{% endif %}" href="{{ url_for('.reserve') }}">Change</a>
+                <a class="btn btn-danger {% if seckill.kill_time.year > 2000 %}disabled{% endif %}" href="{{ url_for('.unreserve') }}">Cancel</a>
+            {% endif %}
+            </div>
+        {% else %}
+             <h3>You should choose a target first.</h3>
+            <div>
+            {% if current_user.can(Permission.KILL) %}
+                <a class="btn btn-primary" href="{{ url_for('.reserve') }}">Choose</a>
+            {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="page-header">
+        <h2>SecKill starts at {{ killhour }}:00 today.</h2>
+        {% if timer > 0 %}
+        <div id="countdown" data-timer="{{ timer }}" style="width: 500px; height: 125px; padding: 0px;"></div>
+        {% endif %}
+        <div id='seckill' style="width: 500px; height: 125px; padding: 40px 100px;{% if timer > 0 %}display:none;{% endif %}">
+        {% if current_user.can(Permission.KILL) and seckill and seckill.reserved %}
+                <a id="btnseckill" class="btn btn-success btn-lg {% if seckill.kill_time.year > 2000 %}disabled{% endif %}" href="#" style="font-size: 24px; width: 180px;">
+                    {% if seckill.kill_time.year > 2000 %}Out of Ammo{% else %}SecKill{% endif %}
+                </a>
+        {% endif %}
+        </div>
+    </div>
+    <div>
+        {% if seckill and seckill.win %}
+            <h3>You have killed a {{ seckill.coupon.name }} coupon today!</h3>
+        {% elif seckill and seckill.kill_time.year > 2000 %}
+            <h3>You missed the target.</h3>
+        {% endif %}
+    </div>
+    <div class="page-header">
+        <p>Hello, {% if current_user.is_authenticated %}{{ current_user.name }}{% else %}Stranger{% endif %} from {{ current_user.ip }}.</p>
+        <p>If this is NOT you, please contact site administrator.</p>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type='text/javascript' src="{{ url_for('static', filename='ext/TimeCircles.js')}}"></script>
+    <script>
+        $(function() {
+        	$("#btnseckill").click(function(){
+        		$(this).html("SecKilling...").attr({"disabled": "disabled"});
+        		window.location.href='/seckill';
+        	});
+            $("#countdown").TimeCircles({
+                count_past_zero: true,
+                circle_bg_color: "#eee",
+                time: { Days: { show: false }}
+            }).addListener(countdownComplete);
+        });
+        function countdownComplete(unit, value, total){
+            if(total<1){
+                $("#countdown").fadeOut();
+            }
+            if(total<0){
+                $("#countdown").TimeCircles().stop();
+                $("#seckill").show();
+            }
+        }
+    </script>
+{% endblock %}

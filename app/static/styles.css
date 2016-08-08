@@ -1,0 +1,97 @@
+.navbar-brand{
+    height: 100%;
+}
+.navbar {
+    border-radius: 0px !important;
+}
+
+
+ul.seckills {
+    list-style-type: none;
+    padding: 0px;
+    margin: 16px 0px 0px 0px;
+}
+div.seckill-tabs ul.seckills {
+    margin: 0px;
+    border-top: none;
+}
+ul.seckills li.seckill {
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+ul.seckills li.seckills:hover {
+    background-color: #f0f0f0;
+}
+div.seckill-content {
+    min-height: 22px;
+}
+div.seckill-title div {
+   text-align: center;
+   font-weight: bold;
+}
+div.seckill-footer {
+    text-align: right;
+}
+
+li.seckill .coupon {
+    width: 50px;
+}
+li.seckill .user {
+    width: 120px;
+}
+li.seckill .coupon span{
+    height: 22px;
+    width: 20px;
+    display: block;
+}
+li.seckill .coupon .Red{
+    background-color: red;
+}
+li.seckill .coupon .Yellow{
+    background-color: yellow;
+}
+li.seckill .coupon .Green{
+    background-color: green;
+}
+div.pagination {
+    width: 100%;
+    text-align: right;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+
+ul.users {
+    list-style-type: none;
+    padding: 0px;
+    margin: 16px 0px 0px 0px;
+    border-top: 1px solid #e0e0e0;
+}
+div.user-tabs ul.users {
+    margin: 0px;
+    border-top: none;
+}
+ul.users li.user {
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+ul.users li.users:hover {
+    background-color: #f0f0f0;
+}
+div.user-content {
+    margin-left: 48px;
+    min-height: 30px;
+}
+div.user-title div {
+   text-align: center;
+   font-weight: bold;
+}
+div.user-content .user-confirmed,
+div.user-content .user-member_since
+{
+    text-align: center;
+}
+div.user-footer {
+    text-align: right;
+}

@@ -1,0 +1,27 @@
+<ul class="users">
+    <li class="user">
+        <div class="user-content user-title">
+            <div class="user-staff_id col-md-2">IP</div>
+            <div class="user-name col-md-1">Name</div>
+            <div class="user-confirmed col-md-2">Role</div>
+            <div class="user-member_since col-md-3">Member since</div>
+        </div>
+    </li>
+    {% for user in users %}
+    <li class="user">
+        <div class="user-content">
+            <div class="user-staff_id col-md-2">{{ user.ip }}</div>
+            <div class="user-name col-md-1">{{ user.name }}</div>
+            <div class="user-confirmed col-md-2">{{ user.role.name }}</div>
+            <div class="user-member_since col-md-3">{{ user.member_since }}</div>
+            <div class="post-footer col-md-1">
+                {% if current_user.is_administrator() %}
+                <a href="{{ url_for('admin.user_edit', id=user.id) }}">
+                    <span class="btn btn-primary btn-sm">Edit</span>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>

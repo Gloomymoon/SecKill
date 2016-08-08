@@ -1,0 +1,33 @@
+<ul class="seckills">
+    <li class="seckill">
+        <div class="seckill-content seckill-title">
+            <div class="coupon col-md-1">Win</div>
+            <div class="datemark col-md-1">Datemark</div>
+            <div class="user col-md-1">Name</div>
+            <div class="kill_time col-md-2">SecKill Time</div>
+        </div>
+    </li>
+    {% for sk in seckills %}
+    <li class="seckill">
+        <div class="seckill-content">
+            <div class="coupon col-md-1">
+                <span class="{% if sk.win %}{{ sk.coupon.name }} win{% endif %}"></span>
+            </div>
+            <div class="user col-md-1">{{ sk.datemark }}</div>
+            <div class="user col-md-1">{{ sk.user.name }}</div>
+            <div class="kill_time col-md-3">{% if sk.kill_time.year > 2000 %}{{ sk.kill_time }}{% endif %}</a></div>
+            
+            <div class="seckill-footer">
+                {% if current_user.is_administrator() %}
+                <a href="{{ url_for('admin.seckill_edit', id=sk.id) }}">
+                    <span class="btn btn-danger btn-xs">Edit [Admin]</span>
+                </a>
+                <a href="{{ url_for('main.comment', id=sk.id) }}#comments">
+                    <span class="btn btn-primary btn-xs">{{ sk.comments.count() }} Comments</span>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>

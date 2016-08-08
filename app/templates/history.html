@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}SecKill - History{% endblock %}
+
+{% block page_content %}
+
+
+<div class="history-tabs">
+	<ul class="nav nav-tabs">
+		<li{% if show_type == 'my' %} class="active"{% endif %}><a href="{{ url_for('.history_my') }}">My</a></li>
+		<li{% if show_type == 'today' %} class="active"{% endif %}><a href="{{ url_for('.history_today') }}">Today</a></li>
+		<li{% if show_type == 'all' %} class="active"{% endif %}><a href="{{ url_for('.history_all') }}">All</a></li>
+	</ul>
+	{% include '_seckills.html' %}
+</div>
+{% if pagination %}
+<div class="pagination">
+	{{ macros.pagination_widget(pagination, '.index') }}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}

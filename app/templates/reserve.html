@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}SecKill - Reserve Coupon{% endblock %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1>Choose your target wisely, {% if current_user.is_authenticated %}{{ current_user.name }}{% else %}Stranger{% endif %}.</h1>
+    </div>
+    <div class="col-md-4">
+        {% if current_user.can(Permission.KILL) %}
+            {{ wtf.quick_form(form) }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}
